@@ -39,7 +39,9 @@ export const AuthProvider = ({children}) => {
     };
 
     const signInWithEmailLink = (email,code) => {
-        return firebase.auth.signInWithEmailLink(email,code).then(result =>{
+        return firebase.auth
+        .signInWithEmailLink(email,code)
+        .then(result =>{
             SetUser(result.user);
             return true;
         })

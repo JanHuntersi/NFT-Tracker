@@ -35,10 +35,13 @@ export const AuthProvider = ({ children }) => {
         url: 'http://localhost:3000/confirm',
         handleCodeInApp: true,
       })
-      .then(() => {
-        console.log("slo je")
+      .then((data) => {
+        console.log(data)
         return true;
-      });
+      }).catch((err) =>{
+        console.log(err);
+
+      })
   };
 
   const signInWithEmailLink = (email, code) => {

@@ -6,19 +6,21 @@ import { useAuth } from '../../hooks/useAuth';
 export default function LoginForm(){
     const {handleSubmit, register,  formState: { errors }, setError, formState} = useForm();  //Object destructuring
 
-    const {sendSingInLinkToEmail} = useAuth();
+    const {sendSignInLinkToEmail} = useAuth();
 
-    const onSubmit = async (data) => {
+    const onSubmit = async data => {
         console.log("v submit funkciji smo!")
         console.log(data.email)
         try{
-await sendSingInLinkToEmail(data.email);
+await sendSignInLinkToEmail(data.email);
         }catch(error){
+            console.log(error)
             setError('email',{
                 type: 'manual',
                 message:error.message
             })
         }
+        console.log("poslali smo!")
     }
 
     return(
@@ -30,7 +32,7 @@ await sendSingInLinkToEmail(data.email);
 <form onSubmit={handleSubmit(onSubmit)}>
     <FormControl>
         <FormLabel htmlFor='email'>Email</FormLabel>
-        <Input name="email" placeholder="Email" ref={register()} />
+        <Input name="email" placeholder="Email" {...register("email", { required: true })} />
         <Button mt={4} colorScheme={'teal'} isLoading={formState.isSubmitting} type="submit">Submit</Button>
     </FormControl>
 </form>

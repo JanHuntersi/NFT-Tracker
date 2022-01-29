@@ -28,23 +28,26 @@ export const AuthProvider = ({ children }) => {
 
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
-  const login = (email, password) => {
+  const sendSignInLinkToEmail = email => {
     return firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((response) => {
-        setUser(response.user);
-        return response.user;
+      .sendSignInLinkToEmail(email, {
+        url: 'http://localhost:3000/confirm',
+        handleCodeInApp: true,
+      })
+      .then(() => {
+        console.log("slo je")
+        return true;
       });
   };
 
-  const signup = (email, password) => {
+  const signInWithEmailLink = (email, code) => {
     return firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        setUser(response.user);
-        return response.user;
+      .signInWithEmailLink(email, code)
+      .then(result => {
+        setUser(result.user);
+        return true;
       });
   };
 
@@ -53,25 +56,7 @@ export const AuthProvider = ({ children }) => {
       .auth()
       .signOut()
       .then(() => {
-        setUser(false);
-      });
-  };
-
-  const sendPasswordResetEmail = (email) => {
-    return firebase
-      .auth()
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        return true;
-      });
-  };
-
-  const confirmPasswordReset = (code, password) => {
-    return firebase
-      .auth()
-      .confirmPasswordReset(code, password)
-      .then(() => {
-        return true;
+        setUser(null);
       });
   };
 
@@ -80,7 +65,7 @@ export const AuthProvider = ({ children }) => {
   // ... component that utilizes this hook to re-render with the ...
   // ... latest auth object.
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       setUser(user);
       setIsAuthenticating(false);
     });
@@ -89,19 +74,14 @@ export const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  // The user object and auth methods
   const values = {
     user,
     isAuthenticating,
-    login,
-    signup,
+    sendSignInLinkToEmail,
+    signInWithEmailLink,
     logout,
-    sendPasswordResetEmail,
-    confirmPasswordReset,
   };
 
-  // Provider component that wraps your app and makes auth object
-  // ... available to any child component that calls useAuth().
   return (
     <AuthContext.Provider value={values}>
       {!isAuthenticating && children}

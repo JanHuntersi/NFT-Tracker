@@ -24,12 +24,6 @@ export default function Nav(){
                      <Link to='/login'>
                          <Text fontSize="md" mr={8}>Login</Text>
                      </Link>
-                     <Link to='/login'>
-                         <Text fontSize="md" mr={8}>Login</Text>
-                     </Link>
-                     <Link to='/login'>
-                         <Text fontSize="md" mr={8}>Login</Text>
-                     </Link>
                      </>
                 )}
             </Flex>
@@ -37,3 +31,5 @@ export default function Nav(){
     )
         
 }
+
+//33.34 youtube https://www.youtube.com/watch?v=8Xnpipa2k2M

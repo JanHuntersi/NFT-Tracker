@@ -29,6 +29,18 @@ await sendSignInLinkToEmail(data.email);
     colSpan={3,null,null,1,null,null}
     p={6}>
 <Heading as="h1" mb={6}>Login</Heading>
+{errors.email && (
+    <Alert status='error' variant='subtle' mt={6} mb={6}>
+        <AlertIcon />
+        {errors.email.message}
+    </Alert>
+)}
+{formState.isSubmitSuccessful &&(
+    <Alert status='success' variant='subtle' mt={6} mb={6}>
+    <AlertIcon />
+    Sign in was succesfull
+</Alert>
+)}
 <form onSubmit={handleSubmit(onSubmit)}>
     <FormControl>
         <FormLabel htmlFor='email'>Email</FormLabel>

@@ -1,14 +1,16 @@
 import Layout from "./components/layout/Layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginForm from "./components/auth/LoginForm";
-import Custom from "./components/layout/Custom";
 import ConfirmForm from "./components/auth/ConfirmForm";
+import PrivateRoute from "./components/route/PrivateRoute";
+import NftDashboard from "./components/dashboard/NftDashboard";
+
 function App() {
 	return (
 		<Router>
 			<Routes>
 				<Route
-					path="/login"
+					exact path="/login"
 					element={
 						<Layout>
 							<LoginForm />
@@ -16,21 +18,26 @@ function App() {
 					}
 				></Route>
 				<Route
-					path="/confirm"
+					exact path="/confirm"
 					element={
 						<Layout>
 							<ConfirmForm />
 						</Layout>
 					}
 				></Route>
-        		<Route
-					path="/"
+				<Route
+					exact path="/"
 					element={
+						<PrivateRoute>				
 						<Layout>
-						
+							<NftDashboard/>
 						</Layout>
+						</PrivateRoute>
 					}
+				
+					
 				></Route>
+        		
 			</Routes>
 		</Router>
 	);

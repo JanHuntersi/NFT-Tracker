@@ -37,9 +37,7 @@ await sendSignInLinkToEmail(data.email);
 )}
 {formState.isSubmitSuccessful &&(
     <Alert status='success' variant='subtle' mt={6} mb={6}>
-    <AlertIcon />
-    Sign in was succesfull
-</Alert>
+    <AlertIcon />Check your email to complete registration! </Alert>
 )}
 <form onSubmit={handleSubmit(onSubmit)}>
     <FormControl>

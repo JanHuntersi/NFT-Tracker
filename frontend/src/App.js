@@ -10,7 +10,7 @@ function App() {
 		<Router>
 			<Routes>
 				<Route
-					exact path="/login"
+					exact path="/"
 					element={
 						<Layout>
 							<LoginForm />
@@ -26,7 +26,7 @@ function App() {
 					}
 				></Route>
 				<Route
-					exact path="/"
+					exact path="/dashboard"
 					element={
 						<PrivateRoute>				
 						<Layout>

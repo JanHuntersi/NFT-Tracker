@@ -33,7 +33,7 @@ export default function ConfirmForm() {
 		console.log(data.email);
 		try {
 			await signInWithEmailLink(data.email, location.search);
-			navigate("/");    //readirects user to another webpage
+			navigate("/dashboard");    //readirects user to another webpage
 		} catch (error) {
 			console.log(error);
 			setError("email", {

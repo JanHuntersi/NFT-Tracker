@@ -6,22 +6,23 @@ import { useAuth } from "../../hooks/useAuth";
 export default function Nav(){
     const {user,logout} = useAuth();
 
+  
     return(
         <GridItem colStart={1} colSpan={3} p={3}>
              <Flex>
                 {user && (
                     <>
-                    <Link to='/'>
+                    <Link to='/dashboard'>
                         <Text fontSize="md" mr={8}>Dashboard</Text>
                     </Link>
-                    <Box as="button" onClick={logout}>
+                    <Box as="button" onClick={logout }>
                     <Text fontSize="md" mr={8}>Logout</Text>
                     </Box>
                     </>
                 )}
                 {!user &&(
                      <>
-                     <Link to='/login'>
+                     <Link to='/'>
                          <Text fontSize="md" mr={8}>Login</Text>
                      </Link>
                      </>

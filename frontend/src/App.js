@@ -4,6 +4,7 @@ import LoginForm from "./components/auth/LoginForm";
 import ConfirmForm from "./components/auth/ConfirmForm";
 import PrivateRoute from "./components/route/PrivateRoute";
 import NftDashboard from "./components/dashboard/NftDashboard";
+import NotFoundPage from "./components/pages/NotFoundPage";
 
 function App() {
 	return (
@@ -29,15 +30,22 @@ function App() {
 					exact path="/dashboard"
 					element={
 						<PrivateRoute>				
-						<Layout>
-							<NftDashboard/>
-						</Layout>
-						</PrivateRoute>
-					}
-				
+							<Layout>
+								<NftDashboard/>
+							</Layout>
+						</PrivateRoute>}>
+				</Route>
+				<Route
+				path="*"
+				element={
+				<Layout>
+						<NotFoundPage />
+				</Layout>
+		
+				}
+				>
 					
-				></Route>
-        		
+				</Route>	
 			</Routes>
 		</Router>
 	);

@@ -9,7 +9,7 @@ export default function NftDashboard (){
 
     return(
         <GridItem
-        colStart={[1,null,null,2,null,null]}
+        colStart={[2,null,null,2,null,null]}
         colSpan={3,null,null,1,null,null}
         p={6}
         >

@@ -1,5 +1,6 @@
 import { GridItem, Heading } from "@chakra-ui/react";
 import { useAuth } from "../../hooks/useAuth";
+import ShowNfts from "../nft/ShowNfts";
 
 
 
@@ -17,6 +18,7 @@ export default function NftDashboard (){
               Nft Dashboard 
                </Heading> 
                <p>Hello {user.email}</p>
+               <ShowNfts />
         </GridItem>
     );
 }

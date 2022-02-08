@@ -1,4 +1,4 @@
-import { Button, Heading } from "@chakra-ui/react";
+import { Button, Heading, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { useState } from "react";
 
 export default function ShowNfts() {
@@ -6,53 +6,71 @@ export default function ShowNfts() {
 		console.log("Calling fetchNftFromOwnerAddr");
 		setLoading(true);
 		fetch(`${baseURL}?owner=${ownerAddr}`, requestOptions)
-			.then((response) => response.json())
-            //.then(response => )
-			//.then(response => setData({data:response}))
+		.then((response) =>{
+			if (response.status==200){
+				
+				return response.json()
+			}else{
+				throw new Error("Wrong address")
+			}
+		})	
+            
 		//	.then((response) => JSON.stringify(response.ownedNfts))
 			//  .then(response => JSON.stringify(response, null, 2))
 			.then((response) => response.ownedNfts)
-     //   .then((response) => console.log(response))
-            .then((response) => response.map(el => setData(data =>[...data,el])
-            ))
+ //           .then((response) => response.map(el => setData(data =>[...data,el])))
 
-			.catch((err) => setError(err))
+		.catch((err) => setError(err.message))
+			
+//.catch((err) => console.log(err))
 			.finally(() => {
 				setLoading(false);
 				//       data.map(el => console.log("el"))
 			});
 	}
 
-function handleSubmit(event){
-	event.preventDefault();
-	console.log(`Value je  ${value}`);
+function handleSubmit(e){
+	e.preventDefault();
+	console.log(`Value je  ${address}`);
+	fetchNftFromOwnerAddr(address)
 }
-
+	const [address,SetAddress] = useState(null);
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
+	const [error, setError] = useState(false);
 
 	var requestOptions = {
 		method: "GET",
 		redirect: "follow",
 	};
-	const baseURL = "https://eth-mainnet.g.alchemy.com/v2/demo/getNFTs/";
+
+	const baseURL = "https://eth-mainnet.alchemyapi.io/v2/bM_aDqTBfvhmtNlz330E67M-Yw2GR_uO";
 
 	return (
 		<>
 			<Heading>Hello from ShowNfts.js</Heading>
 			<p>0x67425e833b3ba8970636d5fb18134487f52aac59</p>
 			
-			<form onSubmit={(fetchNftFromOwnerAddr("0x8d9a8e19b1275f8c3c9a0d57c69f3d330ebf979d"))}>
-
-			</form>
-			<Button
-				onClick={() =>
-					fetchNftFromOwnerAddr("0x8d9a8e19b1275f8c3c9a0d57c69f3d330ebf979d")
-				}
+			<form onSubmit={handleSubmit}>
+			<FormControl isRequired>
+			<FormLabel>Eth address</FormLabel>
+			<Input
+			type="text"
+			placeholder="example: 0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+			size="lg"
+			onChange={event => SetAddress(event.currentTarget.value)}
 			>
-				Get nfts
+			</Input>
+			<Button
+			variant="outline"
+		
+			type="submit"
+			>
+Send
 			</Button>
+			</FormControl>
+			</form>
+			
 			{loading && <p>Loading fetch call</p>}
 			{error && <p>{error}</p>}
             {data.map(el => (

@@ -23,6 +23,11 @@ export default function ShowNfts() {
 			});
 	}
 
+function handleSubmit(event){
+	event.preventDefault();
+	console.log(`Value je  ${value}`);
+}
+
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
@@ -37,6 +42,10 @@ export default function ShowNfts() {
 		<>
 			<Heading>Hello from ShowNfts.js</Heading>
 			<p>0x67425e833b3ba8970636d5fb18134487f52aac59</p>
+			
+			<form onSubmit={(fetchNftFromOwnerAddr("0x8d9a8e19b1275f8c3c9a0d57c69f3d330ebf979d"))}>
+
+			</form>
 			<Button
 				onClick={() =>
 					fetchNftFromOwnerAddr("0x8d9a8e19b1275f8c3c9a0d57c69f3d330ebf979d")

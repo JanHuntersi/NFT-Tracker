@@ -5,11 +5,20 @@ import ConfirmForm from "./components/auth/ConfirmForm";
 import PrivateRoute from "./components/route/PrivateRoute";
 import NftDashboard from "./components/dashboard/NftDashboard";
 import NotFoundPage from "./components/pages/NotFoundPage";
+import NftTest from "./components/nft/NftTest";
 
 function App() {
 	return (
 		<Router>
 			<Routes>
+			<Route
+					exact path="/test"
+					element={
+						<Layout>
+							<NftTest />
+						</Layout>
+					}
+				></Route>
 				<Route
 					exact path="/"
 					element={

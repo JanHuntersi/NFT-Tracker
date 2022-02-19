@@ -2,27 +2,43 @@ import { Button, CircularProgress, FormControl,Box, FormLabel,Input,GridItem, Si
 import { useState } from "react";
 import { useNFTBalances } from "react-moralis";
 import ErrorMessage from "../ErrorMessage";
+import NftImage from "../NftImage";
 
 
 
 export default function NftTest(){
- 
+
+    /* 
+   {data && data.total!=0 &&  data.result.map(el =>(
+    <p key={el.token_id}>{el.token_address}</p>
+))}
+    */
+
 
     const { getNFTBalances, data, error } = useNFTBalances();
     const [nftAddress,setAddress] = useState(null)
     const [isLoading,setLoading] = useState(false)
-    const [numOfImages,setNumOfImages] = useState(15);
+    const [numOfNftLength, setnumOfNftLength] = useState(0)
+    
 
     function  handleSubmit(e){
         e.preventDefault();
         setLoading(true);
         console.log(`Value je ${nftAddress}`);
         getNFTBalances({ params: { address:nftAddress },
-        onSuccess:() =>{console.log(data.result) },
+        onSuccess:() =>{console.log("dela")},
         onError:() =>{console.log("napak bila")},
         onComplete:() => {setLoading(false)}
      })
-     //.then((mydata) =>console.log(JSON.stringify(mydata,null,2)))
+     .then((mydata)=>{
+if(mydata.total < 15){
+    console.log("manjse ke ")
+    setnumOfNftLength(mydata.total)}else{
+        setnumOfNftLength(15)   //set 15
+    }
+    return mydata})
+     .then((mydata) =>console.log(JSON.stringify(mydata,null,2)))
+   //  .then(console.log(data.total));
     }
 
 //{data && data.total!=0 && <>{JSON.stringify(data,null,2)}</>}
@@ -75,24 +91,28 @@ export default function NftTest(){
          h="sm"
          >
           
-                          <SimpleGrid minChildWidth='120px' spacing='40px'>
-  <Box bg='tomato' height='80px'></Box>
-  <Box bg='tomato' height='80px'></Box>
-  <Box bg='tomato' height='80px'></Box>
-  <Box bg='tomato' height='80px'></Box>
-  <Box bg='tomato' height='80px'></Box>
-  <Box bg='tomato' height='80px'></Box>
-</SimpleGrid>
+             <p>{numOfNftLength}</p>             
 
-{data && data.total!=0 &&  <>{data.result.map(el =>(
-    <p>{el.token_address}</p>
-))}
-</>}
+{
 
-{data && data.total!=0 &&  <>{data.result.map(el =>(
-    <p>{el.token_address}</p>
-))}
-</>}
+    (()=>{
+        let content = []
+        for(let i=0; i< numOfNftLength; i++){
+            if(data.result[i].name != " " && data.result[i].metadata != null){
+                content.push(data.result[i])
+            }
+            
+        }
+        return(
+            <SimpleGrid minChildWidth='300px' spacing='40px'>
+            {content.map((el) =>
+            <NftImage key={el.block_number_minted+el.token_address+el.token_id} nft={el} />
+            )}
+            </SimpleGrid>
+        )
+    })()
+}
+
 
 
        </GridItem>

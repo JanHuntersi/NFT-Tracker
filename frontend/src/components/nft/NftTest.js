@@ -21,6 +21,7 @@ export default function NftTest() {
 	const [nftAddress, setAddress] = useState(null);
 	const [isLoading, setLoading] = useState(false);
     const [showButton,setShowButton] =useState(true)
+    const[disabled,setDisabled] = useState(false)
 
     const [numOfNftShowed, setNumOfNftShowed]= useState(15);   //How many nfts will user be able to see on the webpage
     const [numOfNftLength, setnumOfNftLength] = useState(0); //number of nfts loop will show
@@ -31,13 +32,13 @@ export default function NftTest() {
 //setNumOfNftShowed()
 //user in a dropdown menu selects how many nfts does he want to see
 
-//
+//button loads
 //
 
 
 
     function showMore(){
-        setNftStartNum(numOfNftLength-1);  //loop will start at this integer, -1 because its an array
+        setNftStartNum(numOfNftLength);  //loop will start at this integer, -1 because its an array
 
         if((data.total-numOfNftLength)>5){  //Show x more nfts 
             setnumOfNftLength(numOfNftLength+5)
@@ -120,7 +121,13 @@ export default function NftTest() {
 
                 {numOfNftLength>0 && showButton &&
                             <Center>
-                                <Button onClick={showMore} colorScheme={"cyan"} size="lg">Show more</Button>
+                                <Button disabled={disabled} onClick={() => {
+                                showMore()
+                                setDisabled(true);
+                                setTimeout(()=>{
+                                    setDisabled(false)
+                                },2000)}
+                                } colorScheme={"cyan"} size="lg">Show more</Button>
                             </Center>}
 
 			</GridItem>

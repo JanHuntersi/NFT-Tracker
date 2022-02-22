@@ -1,20 +1,16 @@
-import { Image, Box, Heading, Spinner, Button, } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
-import { useNavigate, useHistory } from "react-router-dom";
+import { GridItem,Heading, Image, Spinner } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
-//if image starts with ipfs:// -> we need to swap  with https://ipfs.moralis.io:2053/ipfs/<imageHash>
+export default function NftPage() {
 
+	//nft is an object with data about that nft
+	const location = useLocation()
+	const nft = location.state.nft
+	console.log(JSON.stringify(nft,null,2))
 
-export default function NftImage({ nft }) {
 	const [src, setSrc] = useState(null);
 	const [loading, setLoading] = useState(true);
-
-	//navigate user to a seperate page with nft info
-	const navigate = useNavigate();
-
-	const showMore = () => {
-		navigate("/nftPage",{state:{nft:nft}})
-	}
 
 	useEffect(() => {
 		console.log(nft.metadata);
@@ -32,9 +28,16 @@ export default function NftImage({ nft }) {
 		setLoading(false);
 	};
 
-	return (
-		<Box>
+
+  
+	return(
+		<GridItem
+			colStart={[2, null, null, 2, null, null]}
+			colSpan={(3, null, null, 1, null, null)}
+		>
+            
 			<Heading>{nft.name}</Heading>
+			<Heading size="sm">{nft.metadata.name}</Heading>
 			{loading && <Spinner />}
 			<Image
 				onLoad={imageLoaded}
@@ -43,9 +46,6 @@ export default function NftImage({ nft }) {
 				fallbackSrc="https://via.placeholder.com/300"
 			></Image>
 			<p>{nft.metadata.description}</p>
-		<Button onClick={showMore} colorScheme={"whatsapp"} size={"lg"}>Show more
-		
-		</Button>
-		</Box>
+		</GridItem>
 	);
 }

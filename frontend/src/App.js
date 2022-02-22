@@ -6,11 +6,24 @@ import PrivateRoute from "./components/route/PrivateRoute";
 import NftDashboard from "./components/dashboard/NftDashboard";
 import NotFoundPage from "./components/pages/NotFoundPage";
 import NftTest from "./components/nft/NftTest";
+import NftPage from "./components/pages/NftPage";
 
 function App() {
 	return (
 		<Router>
 			<Routes>
+			
+			<Route
+					exact path="/nftPage"
+					element={
+						<Layout>
+							<NftPage />
+						</Layout>
+					}>
+				
+				
+			</Route>				
+			
 			<Route
 					exact path="/test"
 					element={

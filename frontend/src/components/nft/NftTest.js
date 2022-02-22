@@ -116,6 +116,7 @@ export default function NftTest() {
            
           
             <p>Num of curr length:{numOfNftLength}</p>
+            
 			<GridItem colStart={1} colSpan={3} p={3} h="sm">
             <ForLoop nftStartNum={nftStartNum} numOfNftLength={numOfNftLength} data={data}/>
 

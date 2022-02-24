@@ -27,13 +27,14 @@ export default function NftTest() {
     const [numOfNftLength, setnumOfNftLength] = useState(0); //number of nfts loop will show
     const [nftStartNum,setNftStartNum] = useState(0)   //starting iterator in the loop
 
-//TODO
+
 
 //setNumOfNftShowed()
 //user in a dropdown menu selects how many nfts does he want to see
 
-//button loads
-//
+
+
+
 
 
 
@@ -52,6 +53,8 @@ export default function NftTest() {
 	function handleSubmit(e) {
 		e.preventDefault();
 		setLoading(true);
+
+
 		console.log(`Value je ${nftAddress}`);
 		getNFTBalances({
 			params: { address: nftAddress },
@@ -60,9 +63,11 @@ export default function NftTest() {
 			},
 			onError: () => {
 				console.log("napak bila");
+			
 			},
 			onComplete: () => {
 				setLoading(false);
+				
 			},
 		})
 			.then((mydata) => {
@@ -75,7 +80,9 @@ export default function NftTest() {
 				}
 				return mydata;
 			})
+
 			.then((mydata) => console.log(JSON.stringify(mydata, null, 2)));
+			
 		//  .then(console.log(data.total));
 	}
 
@@ -119,7 +126,6 @@ export default function NftTest() {
             
 			<GridItem colStart={1} colSpan={3} p={3} h="sm">
             <ForLoop nftStartNum={nftStartNum} numOfNftLength={numOfNftLength} data={data}/>
-
                 {numOfNftLength>0 && showButton &&
                             <Center>
                                 <Button disabled={disabled} onClick={() => {
@@ -131,7 +137,9 @@ export default function NftTest() {
                                 } colorScheme={"cyan"} size="lg">Show more</Button>
                             </Center>}
 
+	
 			</GridItem>
+			
             
 		</>
 	);

@@ -1,5 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Heading, GridItem, Button, Center } from "@chakra-ui/react";
+import GoBack from "../GoBack";
+
+
+
 export default function NotFoundPage() {
 	let navigate = useNavigate();
 	function goToPreviusPage() {
@@ -11,15 +15,7 @@ export default function NotFoundPage() {
 				404 PAGE NOT FOUND
 			</Heading>
 			<Center>
-				<Button
-					colorScheme="blue"
-					position="center"
-					mt="4"
-					size="md"
-					onClick={goToPreviusPage}
-				>
-					Back to previus page
-				</Button>
+				<GoBack />				
 			</Center>
 		</GridItem>
 	);

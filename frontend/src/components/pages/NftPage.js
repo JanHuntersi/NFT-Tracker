@@ -1,6 +1,7 @@
 import { GridItem,Heading, Image, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import GoBack from "../GoBack";
 
 export default function NftPage() {
 
@@ -13,7 +14,8 @@ export default function NftPage() {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		console.log(nft.metadata);
+
+		
 		if (nft.metadata.image.startsWith("ipfs")) {
 			setSrc(
 				"https://ipfs.moralis.io:2053/ipfs/" +
@@ -46,6 +48,8 @@ export default function NftPage() {
 				fallbackSrc="https://via.placeholder.com/300"
 			></Image>
 			<p>{nft.metadata.description}</p>
+			<GoBack />
+
 		</GridItem>
 	);
 }

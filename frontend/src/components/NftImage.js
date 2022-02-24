@@ -17,7 +17,10 @@ export default function NftImage({ nft }) {
 	}
 
 	useEffect(() => {
-		console.log(nft.metadata);
+			console.log(nft)
+			
+
+		if(nft.metadata != null){
 		if (nft.metadata.image.startsWith("ipfs")) {
 			setSrc(
 				"https://ipfs.moralis.io:2053/ipfs/" +
@@ -26,6 +29,7 @@ export default function NftImage({ nft }) {
 		} else {
 			setSrc(nft.metadata.image + "?format=json");
 		}
+	}
 	}, [src]);
 
 	const imageLoaded = () => {
@@ -47,5 +51,6 @@ export default function NftImage({ nft }) {
 		
 		</Button>
 		</Box>
+		
 	);
 }

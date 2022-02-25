@@ -130,7 +130,7 @@ export default function NftTest() {
 						<Button ml={2}
 			 fontSize={"lg"} colorScheme={'blue'}
 					onClick={onCopy} >
-					{hasCopied ? 'Adress Copied' : 'Copy Random Address'}
+					{hasCopied ? 'Adress Copied' : 'Copy Random Adress'}
 					</Button>
 					</Flex>
 					</FormControl>

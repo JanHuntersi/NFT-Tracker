@@ -11,7 +11,7 @@ export default function NftImage({ nft }) {
 
 	//navigate user to a seperate page with nft info
 	const navigate = useNavigate();
-
+	console.log(nft)
 	const showMore = () => {
 		navigate("/nftPage",{state:{nft:nft}})
 	}
@@ -23,7 +23,7 @@ export default function NftImage({ nft }) {
 				"https://ipfs.moralis.io:2053/ipfs/" +
 					nft.metadata.image.split("ipfs://").slice(-1)
 			);
-		} else {
+		} else if (!nft.metadata.image.includes("?format=json")){  //if it doesnt include then add
 			setSrc(nft.metadata.image + "?format=json");
 		}
 	}

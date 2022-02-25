@@ -1,6 +1,7 @@
 import  {useState, useEffect, useContext,createContext} from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database'
 
 //TODO hide this
 firebase.initializeApp({
@@ -12,6 +13,9 @@ firebase.initializeApp({
   appId: "1:1004307404435:web:5e36955d6c7572bedddf66",
   measurementId: "G-RWE7TC5LZX"
 });
+
+var db = firebase.database();
+
 
 const AuthContext = createContext();
 
@@ -78,6 +82,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const values = {
+    db,
     user,
     isAuthenticating,
     sendSignInLinkToEmail,

@@ -17,9 +17,9 @@ function App() {
 					path="/nftPage"
 					element={
 						<PrivateRoute>
-						<Layout>
-							<NftPage />
-						</Layout>
+							<Layout>
+								<NftPage />
+							</Layout>
 						</PrivateRoute>
 					}
 				></Route>
@@ -29,9 +29,9 @@ function App() {
 					path="/getNfts"
 					element={
 						<PrivateRoute>
-						<Layout>
-							<NftTest />
-						</Layout>
+							<Layout>
+								<NftTest />
+							</Layout>
 						</PrivateRoute>
 					}
 				></Route>

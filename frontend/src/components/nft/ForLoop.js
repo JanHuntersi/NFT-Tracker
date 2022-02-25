@@ -1,4 +1,4 @@
-import { GridItem, SimpleGrid } from "@chakra-ui/react";
+import { SimpleGrid } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import NftImage from "./NftImage";
 
@@ -16,7 +16,7 @@ export default function ForLoop({ nftStartNum,numOfNftLength, data }) {
 	}, [numOfNftLength]);
 
 	return (
-		<SimpleGrid minChildWidth="250px" spacing="40px">
+		<SimpleGrid minChildWidth="300px"  spacing="40px">
 			{numOfNftLength != 0 &&
 				content.map((el) => (
 					<NftImage

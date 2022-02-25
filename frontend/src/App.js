@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginForm from "./components/auth/LoginForm";
 import ConfirmForm from "./components/auth/ConfirmForm";
 import PrivateRoute from "./components/route/PrivateRoute";
-import NftDashboard from "./components/dashboard/NftDashboard";
+import NftDashboard from "./components/pages/HomePage";
 import NotFoundPage from "./components/pages/NotFoundPage";
 import NftTest from "./components/nft/NftTest";
 import NftPage from "./components/pages/NftPage";
@@ -12,28 +12,32 @@ function App() {
 	return (
 		<Router>
 			<Routes>
-			
-			<Route
-					exact path="/nftPage"
+				<Route
+					exact
+					path="/nftPage"
 					element={
+						<PrivateRoute>
 						<Layout>
 							<NftPage />
 						</Layout>
-					}>
-				
-				
-			</Route>				
-			
-			<Route
-					exact path="/test"
+						</PrivateRoute>
+					}
+				></Route>
+
+				<Route
+					exact
+					path="/getNfts"
 					element={
+						<PrivateRoute>
 						<Layout>
 							<NftTest />
 						</Layout>
+						</PrivateRoute>
 					}
 				></Route>
 				<Route
-					exact path="/"
+					exact
+					path="/"
 					element={
 						<Layout>
 							<LoginForm />
@@ -41,7 +45,8 @@ function App() {
 					}
 				></Route>
 				<Route
-					exact path="/confirm"
+					exact
+					path="/confirm"
 					element={
 						<Layout>
 							<ConfirmForm />
@@ -49,25 +54,24 @@ function App() {
 					}
 				></Route>
 				<Route
-					exact path="/dashboard"
+					exact
+					path="/dashboard"
 					element={
-						<PrivateRoute>				
+						<PrivateRoute>
 							<Layout>
-								<NftDashboard/>
+								<NftDashboard />
 							</Layout>
-						</PrivateRoute>}>
-				</Route>
+						</PrivateRoute>
+					}
+				></Route>
 				<Route
-				path="*"
-				element={
-				<Layout>
-						<NotFoundPage />
-				</Layout>
-		
-				}
-				>
-					
-				</Route>	
+					path="*"
+					element={
+						<Layout>
+							<NotFoundPage />
+						</Layout>
+					}
+				></Route>
 			</Routes>
 		</Router>
 	);

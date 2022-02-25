@@ -13,8 +13,11 @@ export default function Nav(){
                 {user && (
                     <>
                     <Link to='/dashboard'>
-                        <Text fontSize="md" mr={8}>Dashboard</Text>
+                        <Text fontSize="md" mr={8}>Home</Text>
                     </Link>
+                     <Link to='/getNfts'>
+                         <Text fontSize="md" mr={8}>Find Nfts</Text>
+                     </Link>
                     <Box as="button" onClick={logout }>
                     <Text fontSize="md" mr={8}>Logout</Text>
                     </Box>

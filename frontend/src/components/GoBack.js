@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Center } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 export default function GoBack() {
@@ -8,14 +8,18 @@ export default function GoBack() {
 	}
 
 	return (
+		<Center mt={3}>
+
+		
 		<Button
 			colorScheme="blue"
 			position="center"
-			mt="4"
-			size="md"
+			m="3"
+			size="lg"
 			onClick={goToPreviusPage}
 		>
 			Back to previus page
 		</Button>
+		</Center>
 	);
 }

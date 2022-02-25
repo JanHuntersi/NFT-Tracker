@@ -6,54 +6,57 @@ import {
 	FormLabel,
 	Input,
 	GridItem,
-	SimpleGrid,
+	Heading,
+	Flex,
+	useClipboard,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useNFTBalances } from "react-moralis";
 import ErrorMessage from "../ErrorMessage";
-import ForLoop from "../ForLoop";
-import NftImage from "../NftImage";
-
+import ForLoop from "./ForLoop";
+import NftImage from "./NftImage";
 
 export default function NftTest() {
-
 	const { getNFTBalances, data, error } = useNFTBalances();
 	const [nftAddress, setAddress] = useState(null);
 	const [isLoading, setLoading] = useState(false);
-    const [showButton,setShowButton] =useState(true)
-    const[disabled,setDisabled] = useState(false)
+	const [showButton, setShowButton] = useState(true);
+	const [buttonLoading, setButtonLoading] = useState(false);
 
-    const [numOfNftShowed, setNumOfNftShowed]= useState(15);   //How many nfts will user be able to see on the webpage
-    const [numOfNftLength, setnumOfNftLength] = useState(0); //number of nfts loop will show
-    const [nftStartNum,setNftStartNum] = useState(0)   //starting iterator in the loop
+	const [numOfNftShowed, setNumOfNftShowed] = useState(15); //How many nfts will user be able to see on the webpage
+	const [numOfNftLength, setnumOfNftLength] = useState(0); //number of nfts loop will show
+	const [nftStartNum, setNftStartNum] = useState(0); //starting iterator in the loop
 
-
-
-//setNumOfNftShowed()
-//user in a dropdown menu selects how many nfts does he want to see
+	//Used for copy clipboard
+	const {hasCopied,onCopy} = useClipboard("0x67425e833b3ba8970636d5fb18134487f52aac59")
 
 
+		//TODO
+	//user in a dropdown menu selects how many nfts does he want to see
 
+	function showMore() {
+		setNftStartNum(numOfNftLength); 
 
-
-
-
-    function showMore(){
-        setNftStartNum(numOfNftLength);  //loop will start at this integer, -1 because its an array
-
-        if((data.total-numOfNftLength)>5){  //Show x more nfts 
-            setnumOfNftLength(numOfNftLength+5)
-        }else if((data.total-numOfNftLength)<5 && (data.total-numOfNftLength)>0){ //number of nfts is less than x
-            setnumOfNftLength(numOfNftLength+(data.total-numOfNftLength))
-        }else{ //all nfts have been showed -> disable button
-            setShowButton(false)
-        }
-    }
+		if (data.total - numOfNftLength > 10) {
+			//Show x more nfts
+			console.log("10 more nfts")
+			setnumOfNftLength(numOfNftLength + 10);
+		} else if (
+			data.total - numOfNftLength < 10 &&
+			data.total - numOfNftLength > 0
+		) {
+			//number of nfts is less than x
+			setnumOfNftLength(numOfNftLength + (data.total - numOfNftLength));
+		} else {
+			//all nfts have been showed -> disable button
+			setShowButton(false);
+		}
+	}
 
 	function handleSubmit(e) {
+
 		e.preventDefault();
 		setLoading(true);
-
 
 		console.log(`Value je ${nftAddress}`);
 		getNFTBalances({
@@ -63,18 +66,16 @@ export default function NftTest() {
 			},
 			onError: () => {
 				console.log("napak bila");
-			
 			},
 			onComplete: () => {
 				setLoading(false);
-				
 			},
 		})
 			.then((mydata) => {
 				if (mydata.total < numOfNftShowed) {
 					console.log("manj kot 15 nft");
 					setnumOfNftLength(mydata.total);
-                    setShowButton(false)
+					setShowButton(false);
 				} else {
 					setnumOfNftLength(numOfNftShowed); //set 15
 				}
@@ -82,7 +83,7 @@ export default function NftTest() {
 			})
 
 			.then((mydata) => console.log(JSON.stringify(mydata, null, 2)));
-			
+
 		//  .then(console.log(data.total));
 	}
 
@@ -90,12 +91,19 @@ export default function NftTest() {
 
 	return (
 		<>
-			<GridItem
-				colStart={[2, null, null, 2, null, null]}
-				colSpan={(3, null, null, 1, null, null)}
+			<GridItem colStart={1} colSpan={3} p>
+					<Heading textAlign="center" size="xl">Get NFT's From Address</Heading>
+			</GridItem>
+			
+			<GridItem m={2} 
+				colStart={{base:'1',md:'2',lg:'2',xl:'2'}}
+				colSpan={{base:'3',md:'1',lg:'1',xl:'1'}}
 			>
-				<p>0x67425e833b3ba8970636d5fb18134487f52aac59</p>
-				<form onSubmit={handleSubmit}>
+				
+				
+
+			
+				<form  onSubmit={handleSubmit}>
 					{error && (
 						<ErrorMessage messsage={"Napaka pri pridobivanju podatkov"} />
 					)}
@@ -103,44 +111,60 @@ export default function NftTest() {
 						<ErrorMessage messsage={"Napaka pri pridobivanju podatkov"} />
 					)}
 					<FormControl isRequired>
-						<FormLabel> Enter Users Address</FormLabel>
+						<FormLabel fontSize={"xl"}> Enter Users Address</FormLabel>
 						<Input
 							type="text"
 							placeholder="enter address here"
 							size="lg"
 							onChange={(event) => setAddress(event.currentTarget.value)}
 						></Input>
-						<Button variant="outline" type="submit">
+
+				<Flex justifyContent={"center"} p="4" mt={2}>
+						<Button mr={2} colorScheme={'teal'} fontSize={"lg"} type="submit">
 							{isLoading ? (
 								<CircularProgress isIndeterminate size="24px" color="teal" />
 							) : (
-								"Fetch!"
+								"Get NFTs"
 							)}
 						</Button>
+						<Button ml={2}
+			 fontSize={"lg"} colorScheme={'blue'}
+					onClick={onCopy} >
+					{hasCopied ? 'Adress Copied' : 'Copy Random Address'}
+					</Button>
+					</Flex>
 					</FormControl>
 				</form>
 			</GridItem>
-           
-          
-            <p>Num of curr length:{numOfNftLength}</p>
-            
-			<GridItem colStart={1} colSpan={3} p={3} h="sm">
-            <ForLoop nftStartNum={nftStartNum} numOfNftLength={numOfNftLength} data={data}/>
-                {numOfNftLength>0 && showButton &&
-                            <Center>
-                                <Button disabled={disabled} onClick={() => {
-                                showMore()
-                                setDisabled(true);
-                                setTimeout(()=>{
-                                    setDisabled(false)
-                                },2000)}
-                                } colorScheme={"cyan"} size="lg">Show more</Button>
-                            </Center>}
 
-	
+			<GridItem colStart={1} colSpan={3} m={2} p={3} h="sm">
+				<ForLoop
+					nftStartNum={nftStartNum}
+					numOfNftLength={numOfNftLength}
+					data={data}
+				/>
+				{numOfNftLength > 0 && showButton && (
+					<Center mt={9}>
+						<Button
+						 mb={9}
+						 isLoading={buttonLoading}
+							
+							onClick={() => {
+								showMore();
+								setButtonLoading(true);
+								setTimeout(() => {
+									setButtonLoading(false);
+								}, 2000);
+							}}
+							colorScheme="blue"
+							size="lg"
+							p={8}
+						>
+							Show More NFT's
+						</Button>
+					</Center>
+				)}
 			</GridItem>
-			
-            
 		</>
 	);
 }

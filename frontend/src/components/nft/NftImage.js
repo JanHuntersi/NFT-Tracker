@@ -1,6 +1,6 @@
-import { Image, Box, Heading, Spinner, Button, } from "@chakra-ui/react";
+import { Image, Box, Heading, Spinner, Button, Center,AspectRatio } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { useNavigate, useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //if image starts with ipfs:// -> we need to swap  with https://ipfs.moralis.io:2053/ipfs/<imageHash>
 
@@ -17,9 +17,6 @@ export default function NftImage({ nft }) {
 	}
 
 	useEffect(() => {
-			console.log(nft)
-			
-
 		if(nft.metadata != null){
 		if (nft.metadata.image.startsWith("ipfs")) {
 			setSrc(
@@ -37,19 +34,24 @@ export default function NftImage({ nft }) {
 	};
 
 	return (
-		<Box>
-			<Heading>{nft.name}</Heading>
+		<Box  p={5}  shadow="dark-lg"  borderRadius={"30"}>
+			
 			{loading && <Spinner />}
+			<AspectRatio maxW='400px' ratio={4 / 3}>
 			<Image
+			fit={"cover"}
+			verticalAlign={"center"}
 				onLoad={imageLoaded}
 				onError={imageLoaded}
 				src={src}
-				fallbackSrc="https://via.placeholder.com/300"
+				fallbackSrc="https://via.placeholder.com/400"
 			></Image>
-			<p>{nft.metadata.description}</p>
-		<Button onClick={showMore} colorScheme={"whatsapp"} size={"lg"}>Show more
-		
+			</AspectRatio>
+			<Box m="2" width={"90%"} whiteSpace={"nowrap"}textOverflow={"ellipsis"} overflow={"hidden"} fontSize={"lg"}>{nft.metadata.name}</Box>
+		<Center>
+		<Button m="3"  onClick={showMore}  border="5px" colorScheme={"blue"} size={"lg"}>More Details
 		</Button>
+		</Center>
 		</Box>
 		
 	);

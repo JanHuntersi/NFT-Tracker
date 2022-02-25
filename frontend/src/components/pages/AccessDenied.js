@@ -3,6 +3,7 @@ import {
 	Center,
 	Heading,
 	Link as UiLink,
+	Button,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Layout from "../layout/Layout";
@@ -15,8 +16,12 @@ export default function AccessDenied() {
 						Access was denied
 					</Heading>
 					<Center>
+						
 						<Link to="/">
-							<UiLink> Back to main page</UiLink>
+							<Button colorScheme="cyan">
+							<UiLink > Back to main page</UiLink>
+							</Button>
+							
 						</Link>
 					</Center>		
 			</GridItem>

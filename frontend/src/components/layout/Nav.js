@@ -18,9 +18,6 @@ export default function Nav(){
                      <Link to='/getNfts'>
                          <Text fontSize="md" mr={8}>Find Nfts</Text>
                      </Link>
-                    <Box as="button" onClick={logout }>
-                    <Text fontSize="md" mr={8}>Logout</Text>
-                    </Box>
                     </>
                 )}
                 {!user &&(

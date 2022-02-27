@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 //if image starts with ipfs:// -> we need to swap  with https://ipfs.moralis.io:2053/ipfs/<imageHash>
 
+//Todo add liked nfts
+
 
 export default function NftImage({ nft }) {
 	const [src, setSrc] = useState(null);

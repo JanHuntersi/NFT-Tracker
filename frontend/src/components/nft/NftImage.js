@@ -3,27 +3,42 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import 'firebase/database'
+import { MdSettings } from 'react-icons/md'
+import { AiOutlineHeart,AiFillHeart,AiFillCloseCircle,AiOutlineCloseCircle} from "react-icons/ai";
+
 //if image starts with ipfs:// -> we need to swap  with https://ipfs.moralis.io:2053/ipfs/<imageHash>
 
-//Todo add liked nfts
-
-
-
-
-export default function NftImage({ nft }) {
+export default function NftImage({ nft,saved }) {
 	const [src, setSrc] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [liked,SetLiked] = useState(false)
 
 	const {user,logout} = useAuth()
     const {db} = useAuth()
 
     const name = user.email
     //console.log("Hello",name.replaceAll('.',''))
-	console.log(nft.metadata.description)
+	//console.log(nft.metadata.description)
+
+	const changedName=(name.replaceAll('.',''));
+	const nftId =(nft.block_number_minted+nft.token_id+nft.token_address)
 
 	const  addToDB=() =>{
+
+
+
 		console.log("Called addToDB!");
-		const usersRef = db.ref(`users`).child(name.replaceAll('.',''))
+		
+			if(saved){  //nft is saved to firebase it will be removed
+				console.log("Image saved, removing From Firebase!!!!!!")
+		db.ref(`users`).child(changedName).child(nftId).remove();
+			}else{
+
+
+		if(liked==false){
+				SetLiked(true);
+				
+		const usersRef = db.ref(`users`).child(changedName).child(nftId)
 		const user ={
 			metadata:{
 				image: nft.metadata.image,
@@ -32,12 +47,19 @@ export default function NftImage({ nft }) {
 			},
 			token_address:nft.token_address,
 			token_id:nft.token_id,
-			block_number_minted:nft.block_number_minted 
-	
+			block_number_minted:nft.block_number_minted,
 		}
 		usersRef.push(user)
-	}
 
+
+	}else{
+		//TODO remove from firebase
+		console.log("Removing From Firebase!!!!!!")
+		SetLiked(false);
+		db.ref(`users`).child(changedName).child(nftId).remove();
+	}
+	}
+}
 
 
 	//navigate user to a seperate page with nft info
@@ -68,7 +90,7 @@ export default function NftImage({ nft }) {
 		<Box  p={5}  shadow="dark-lg"  borderRadius={"30"}>
 			
 			{loading && <Spinner />}
-			<AspectRatio maxW='400px' ratio={4 / 3}>
+			<AspectRatio >
 			<Image
 			fit={"cover"}
 			verticalAlign={"center"}
@@ -82,8 +104,8 @@ export default function NftImage({ nft }) {
 		<Center>
 		<Button m="3"  onClick={showMore}  border="5px" colorScheme={"blue"} size={"lg"}>More Details
 		</Button>
-		<Button m="3"  onClick={addToDB}  border="5px" colorScheme={"green"} size={"lg"}>Like Picture
-		</Button>
+		{!saved &&<Button m="3"  onClick={addToDB}  border="5px" colorScheme={liked ? "red" : "green"} size={"lg"}>{liked ?<AiOutlineCloseCircle size={25}/>: <AiOutlineHeart size={25} /> }</Button>}
+		{saved && <Button m="3"  onClick={addToDB}  border="5px" colorScheme={"red"} size={"lg"}><AiOutlineCloseCircle size={25}/></Button>}
 		</Center>
 		</Box>
 		

@@ -18,6 +18,7 @@ export default function Nav(){
                      <Link to='/getNfts'>
                          <Text fontSize="md" mr={8}>Find Nfts</Text>
                      </Link>
+                    
                     </>
                 )}
                 {!user &&(

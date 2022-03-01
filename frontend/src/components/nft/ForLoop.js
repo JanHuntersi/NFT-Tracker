@@ -22,6 +22,7 @@ export default function ForLoop({ nftStartNum,numOfNftLength, data }) {
 					<NftImage
 						key={el.block_number_minted + el.token_address + el.token_id}
 						nft={el}
+						saved={false}
 					/>
 				))}
 		</SimpleGrid>

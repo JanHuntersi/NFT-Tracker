@@ -16,6 +16,8 @@ import ErrorMessage from "../ErrorMessage";
 import ForLoop from "./ForLoop";
 import NftImage from "./NftImage";
 
+import {walletAddress} from "../../Data/accounts"
+
 export default function NftTest() {
 	const { getNFTBalances, data, error } = useNFTBalances();
 	const [nftAddress, setAddress] = useState(null);
@@ -28,8 +30,14 @@ export default function NftTest() {
 	const [nftStartNum, setNftStartNum] = useState(0); //starting iterator in the loop
 
 	//Used for copy clipboard
-	const {hasCopied,onCopy} = useClipboard("0x67425e833b3ba8970636d5fb18134487f52aac59")
+	const [addressValue,setAddressValue]= useState("0x67425e833b3ba8970636d5fb18134487f52aac59")
+	const {hasCopied,onCopy} = useClipboard(addressValue)
 
+	function getRandomAddress(){
+		let addresArray =walletAddress
+		setAddressValue(addresArray[Math.floor(Math.random()*addresArray.length)]);
+		onCopy()
+	}
 
 		//TODO
 	//user in a dropdown menu selects how many nfts does he want to see
@@ -129,7 +137,7 @@ export default function NftTest() {
 						</Button>
 						<Button ml={2}
 			 fontSize={"lg"} colorScheme={'blue'}
-					onClick={onCopy} >
+					onClick={()=>getRandomAddress()} >
 					{hasCopied ? 'Adress Copied' : 'Copy Random Adress'}
 					</Button>
 					</Flex>
